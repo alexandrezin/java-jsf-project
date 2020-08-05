@@ -41,16 +41,96 @@ public class UserDaoJDBC implements UserDao {
 
 	@Override
 	public void update(User user) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
 		
+		try {
+			st = conn.prepareStatement("UPDATE user SET name_user = ?, email_user = ? WHERE id_user = ?");
+			st.setString(1, user.getName());
+			st.setString(2, user.getEmail());
+			st.setInt(3, user.getId());
+			st.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
-
+	
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement("DELETE FROM user WHERE id_user = ?");
+			st.setInt(1, id);
+			st.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
-
+	
+	@Override
+	public User getUserById(int id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		User user = new User();
+		
+		try {
+			st = conn.prepareStatement("SELECT * FROM user WHERE user.id_user = ?");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				user.setId(rs.getInt("id_user"));
+				user.setName(rs.getString("name_user")); 
+				user.setEmail(rs.getString("email_user"));
+			}
+			
+		} 
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+		return user;
+	}
+	
+	@Override
+	public List<User> getByParameter(String parameter) {
+		List<User> userList = new ArrayList<User>();
+		
+		Statement st = null;
+		ResultSet rs= null;
+	
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery("SELECT * FROM user WHERE name_user LIKE '%" + parameter + "%' OR email_user LIKE '%" + parameter + "%'");
+			
+			while (rs.next()) {
+				User user = new User(rs.getInt("id_user"), rs.getString("name_user"), rs.getString("email_user"));
+				userList.add(user);
+			}
+		} 
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+		return userList;
+	}
+	
 	@Override
 	public List<User> getAll() {
 		List<User> userList = new ArrayList<User>();
@@ -66,9 +146,13 @@ public class UserDaoJDBC implements UserDao {
 				User user = new User(rs.getInt("id_user"), rs.getString("name_user"), rs.getString("email_user"));
 				userList.add(user);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
 		}
 		return userList;
 	}
