@@ -19,25 +19,7 @@ public class UserController {
 	private String searchText;
 	private User user = new User();
 	private List<User> userList;
-	
-	
-	private String message = "";
-	public String showMessage() {
-		System.out.println("showMessage");
-		this.message = "Esta mensagem deve ser mostrada apos apertar o botao";
-		return (null);
-	}
-	
-	public String getMessage() {
-		return message;
-	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
-	//----------------------
-	
 	public void validateName(FacesContext context, UIComponent component, Object value) throws ValidatorException{
 		
 		for(char c : value.toString().toCharArray()) {
@@ -51,17 +33,21 @@ public class UserController {
 	}
 	
 	public String onSearchButtonAction() {
-		System.out.println("onSearchButtonAction");
 		if (searchText != null) {
 			userList = UserService.getByParameter(searchText);
 		}
 		return (null);
 	}
 	
+	public String onAddNewUserButtonAction() {
+		user = new User();
+		return "user_add";
+	}
+	
 	public String onSaveButtonAction() {
 		if (this.user.getId()==0) UserService.createUser(this.user);
 		else UserService.updateUser(this.user);
-		user = new User();
+		loadUserList();
 		return "user_list";
 	}
 
@@ -72,7 +58,8 @@ public class UserController {
 	
 	public String deleteUser(int id) {
 		UserService.deleteUser(id);
-		return "user_list.xhtml";
+		loadUserList();
+		return (null);
 	}
 	
 	public String getSearchText() {
@@ -92,9 +79,7 @@ public class UserController {
 	}
 
 	public List<User> getUserList() {
-		if (userList == null) {
-			userList = UserService.getAll();
-		}
+		if (userList == null) loadUserList();
 		return userList;
 	}
 	

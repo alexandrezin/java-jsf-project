@@ -54,6 +54,7 @@ public class DB {
 	public Connection getConnection(){
 
 		Connection conn;
+		
 		try {
 			conn = dataSource.getConnection();
 		} 

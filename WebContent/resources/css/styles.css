@@ -4,40 +4,43 @@ html,body{
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 
-.error-message{
-	font-size: 80%;
-	font-color: red;
-	}
+.container-table{
+	  width: 100%;
+	  align-items: center;
+	  justify-content: center;
+	  flex-wrap: wrap;
+	  padding: 10px 10px;
 }
 
-.demo-table {   
-	border-collapse:collapse;
-	border-bottom:1px solid gray;
-	font-family: Tahoma,Verdana,Segoe,sans-serif;
-	width:100%;
+.user-table{
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
 }
  
-.demo-table-header {
-	border-bottom:1px solid gray;
-	background:none repeat scroll 0 0 #0775d3;
-	padding:10px;
+.user-table-header {
+	background:none repeat scroll 0 0 #073763;
+	padding:5px;
 	color: #FFFFFF;
 }
- 
-.demo-table-odd-row {
-	border-top:1px solid gray;
-	background:none repeat scroll 0 0 #FFFFFFF;
+
+.user-table-odd-row {
+	background:none repeat scroll 0 0 #cfe2f3;
 	text-align:center;
 }
  
-.demo-table-even-row {
-	border-top:1px solid gray;
-	background:none repeat scroll 0 0 #D0D0D0;
+.user-table-even-row {
+	background:none repeat scroll 0 0 #6fa8dc;
 	text-align:center;
 }
 
-#wrapper {width: 100%; margin-top: 0px; }
-#header {width: 100%; background: #0775d3; margin-top: 0px; padding:15px 0px 15px 15px;}
+#wrapper {width: 100%; margin-top: 0px;}
+#header {width: 100%; background: #073763; margin-top: 0px; padding:15px 0px 15px 15px; text-align:center; border-radius: 10px;}
 #header h2 {width: 100%; margin:auto; color: #FFFFFF;}
 #container {width: 100%; margin:auto}
 #container h3 {color: #000;}
@@ -47,7 +50,7 @@ html,body{
 #container form#find input {border: 1px solid #ccc; border-radius: 3px; padding: 5px 10px; width: 86%;}
 #container #content {margin-top: 20px;}
 
-.button-style {
+.add-student-button {
 	border: 1px solid #666; 
 	border-radius: 5px; 
 	padding: 4px; 

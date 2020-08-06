@@ -36,6 +36,7 @@ public class UserDaoJDBC implements UserDao {
 		}
 		finally {
 			DB.closeStatement(st);
+			DB.closeConnection(conn);
 		}
 	}
 
@@ -55,6 +56,7 @@ public class UserDaoJDBC implements UserDao {
 		}
 		finally {
 			DB.closeStatement(st);
+			DB.closeConnection(conn);
 		}
 	}
 	
@@ -72,6 +74,7 @@ public class UserDaoJDBC implements UserDao {
 		}
 		finally {
 			DB.closeStatement(st);
+			DB.closeConnection(conn);
 		}
 		
 	}
@@ -101,6 +104,7 @@ public class UserDaoJDBC implements UserDao {
 		finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
+			DB.closeConnection(conn);
 		}
 		return user;
 	}
@@ -127,6 +131,7 @@ public class UserDaoJDBC implements UserDao {
 		finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
+			DB.closeConnection(conn);
 		}
 		return userList;
 	}
@@ -153,6 +158,7 @@ public class UserDaoJDBC implements UserDao {
 		finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
+			DB.closeConnection(conn);
 		}
 		return userList;
 	}
