@@ -9,7 +9,6 @@ import model.entities.User;
 public class UserService {
 	
 	public static void createUser(User user) {
-		System.out.println("createUser");
 		UserDao userDao = DaoFactory.createUserDao();
 		userDao.create(user);
 	}

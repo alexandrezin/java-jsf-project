@@ -4,34 +4,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>
-		Add User
+		#{userController.userAddTitle}
 	</title>
 	<h:outputStylesheet library="css" name="styles.css" /> 
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 </h:head>
 <h:body>
-	<h:form>
-		<h4>
-			<h:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center">
-				<h:outputLabel>Name</h:outputLabel> 
-				<h:inputText id="userName" label="User Name" value="#{userController.user.name}" required="true" validator="#{userController.validateName}" requiredMessage="* This field is required"/> 
-				<h:message for="userName" styleClass="error-message"/>
-				
-				<h:outputLabel>Email</h:outputLabel> 
-				<h:inputText id="userEmail" label="User Email" value="#{userController.user.email}" required="true" validatorMessage="Please, enter a valid email" requiredMessage="* This field is required">
-					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
-				</h:inputText>	
-				<h:message for="userEmail" styleClass="error-message"/>
-
-				<h:outputLabel/>
-				<h:commandButton label="Save" value="Save" action="#{userController.onSaveButtonAction}" styleClass="button-style"/>
-				
+	<div id="wrapper">
+		<div id="header">
+			<h2>
+				<p:outputLabel value="#{userController.userAddTitle}"/>
+			</h2>
+		</div>
+	</div>
+	<br/>
+	<div align="center">
+		<h:form>
+			<h4>
+				<h:panelGrid columns="2" layout="grid">
+					<p:outputLabel for="userName" value="Name: "/>
+					<p:inputText id="userName" label="User Name" value="#{userController.user.name}" required="true" validator="#{userController.validateName}" 
+								 validatorMessage="Please, enter a valid name" requiredMessage="Please, enter a Name"/> 
+					
+					<p:outputLabel for="userEmail" value="Email: "/>
+					<p:inputText id="userEmail" label="User Email" value="#{userController.user.email}" required="true" validatorMessage="Please, enter a valid email" 
+								 requiredMessage="Please, enter an Email">
+						<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+					</p:inputText>	
+				</h:panelGrid>
+			</h4>
+			<h5 align="center"> * Required Information </h5>
+			<h:panelGrid columns="3" layout="grid">
+				<p:commandButton label="Delete" value="Delete" ajax="false" styleClass="delete-button" action="#{userController.deleteUser}" rendered="#{userController.showDeleteButton}" 
+								 onclick="if (!confirm('Do you really want to delete this user?')) return false"/>
+				<p:button label="Cancel" value="Cancel" outcome="user_list.xhtml" ajax="false" styleClass="cancel-button"/>
+				<p:commandButton label="Save" value="Save" action="#{userController.onSaveButtonAction}" ajax="false" styleClass="save-button"/>
 			</h:panelGrid>
-		</h4>
-	</h:form>
-	<h:button label="Cancel" value="Cancel" outcome="user_list.xhtml"/>
+			<p:messages id="messages"/>
+		</h:form>
+	</div>
 </h:body>
 </html>

@@ -12,11 +12,37 @@ html,body{
 	  padding: 10px 10px;
 }
 
+.delete-button{
+	transition-duration: 0.4s;
+ 	cursor: pointer;
+}
+
+.delete-button:hover{
+	background-color: #fe0013;
+}
+
+.cancel-button{
+	transition-duration: 0.4s;
+ 	cursor: pointer;
+}
+
+.cancel-button:hover{
+	background-color: #f9ff00;
+}
+
+.save-button{
+	transition-duration: 0.4s;
+ 	cursor: pointer;
+}
+
+.save-button:hover{
+	background-color: #00fe13;
+}
+
 .user-table{
   border-spacing: 1;
   border-collapse: collapse;
   background: white;
-  border-radius: 10px;
   overflow: hidden;
   width: 50%;
   margin: 0 auto;
@@ -49,16 +75,3 @@ html,body{
 #container form#find label {font-size: 13px; color: #000; float:left; margin-right: 20px;}
 #container form#find input {border: 1px solid #ccc; border-radius: 3px; padding: 5px 10px; width: 86%;}
 #container #content {margin-top: 20px;}
-
-.add-student-button {
-	border: 1px solid #666; 
-	border-radius: 5px; 
-	padding: 4px; 
-	font-size: 12px;
-	font-weight: bold;
-	width: 120px; 
-	padding: 5px 10px; 
-	
-	margin-bottom: 15px;
-	background: #cccccc;
-}

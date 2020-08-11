@@ -19,7 +19,11 @@ public class UserController {
 	private String searchText;
 	private User user = new User();
 	private List<User> userList;
-
+	
+	private String userAddTitle = "";
+	private boolean showDeleteButton = false;
+	private boolean showClearButton = false;
+	
 	public void validateName(FacesContext context, UIComponent component, Object value) throws ValidatorException{
 		
 		for(char c : value.toString().toCharArray()) {
@@ -32,34 +36,48 @@ public class UserController {
 		userList = UserService.getAll();
 	}
 	
-	public String onSearchButtonAction() {
-		if (searchText != null) {
+	public void onSearchButtonAction() {
+		if (!searchText.equals("")) {
 			userList = UserService.getByParameter(searchText);
+			showClearButton = true;
 		}
-		return (null);
+	}
+	
+	public void onClearButtonAction() {
+		userList = null;
+		searchText = "";
+		showClearButton = false;
 	}
 	
 	public String onAddNewUserButtonAction() {
 		user = new User();
-		return "user_add";
+		this.userAddTitle = "Create User";
+		this.showDeleteButton = false;
+		return "user_add?faces-redirect=true";
 	}
 	
 	public String onSaveButtonAction() {
 		if (this.user.getId()==0) UserService.createUser(this.user);
 		else UserService.updateUser(this.user);
 		loadUserList();
-		return "user_list";
+		searchText = "";
+		this.user = new User();
+		return "user_list?faces-redirect=true";
 	}
 
-	public String loadSingleUser(User user) {
-		this.user = user;
-		return "user_add.xhtml";
+	public String loadSingleUser() {
+		if (this.user == null) { 
+			return (null);
+		}
+		this.userAddTitle = "Update User";
+		this.showDeleteButton = true;
+		return "user_add?faces-redirect=true";
 	}
 	
-	public String deleteUser(int id) {
-		UserService.deleteUser(id);
+	public String deleteUser() {
+		UserService.deleteUser(this.user.getId());
 		loadUserList();
-		return (null);
+		return "user_list?faces-redirect=true";
 	}
 	
 	public String getSearchText() {
@@ -82,5 +100,16 @@ public class UserController {
 		if (userList == null) loadUserList();
 		return userList;
 	}
-	
+
+	public String getUserAddTitle() {
+		return userAddTitle;
+	}
+
+	public boolean isShowDeleteButton() {
+		return showDeleteButton;
+	}
+
+	public boolean isShowClearButton() {
+		return showClearButton;
+	}
 }
